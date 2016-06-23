@@ -286,10 +286,10 @@
   // instead if possible.
   _.memoize = function(func) {
     func.prototype.past = {};
-    
+
     return function(){
-      var args = JSON.stringify(arguments);
-      func.prototype.past[args] === undefined && ( func.prototype.past[args] = func.apply(this, arguments));
+      var args = JSON.stringify( arguments );
+      func.prototype.past[args] === undefined && ( func.prototype.past[args] = func.apply( this, arguments));
       return func.prototype.past[args];
     };
   };
@@ -301,6 +301,13 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var args = [];
+    for( var i = 2; i < arguments.length; i++ ){
+      args.push( arguments[i] );
+    }
+    setTimeout( function(){
+      func.apply( this, args );
+    }, wait );
   };
 
 
