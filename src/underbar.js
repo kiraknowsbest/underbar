@@ -285,6 +285,13 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    func.prototype.past = {};
+    
+    return function(){
+      var args = JSON.stringify(arguments);
+      func.prototype.past[args] === undefined && ( func.prototype.past[args] = func.apply(this, arguments));
+      return func.prototype.past[args];
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
