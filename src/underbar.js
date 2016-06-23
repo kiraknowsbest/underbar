@@ -322,6 +322,25 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var shuffled = [];
+    var count = 0;
+    _.each( array, function( item ){
+      if( count > 2 ){
+        if( count % 2 === 1 ){
+          shuffled.push( item );
+        } else {
+          shuffled.unshift( item );
+        }
+      } else {
+        if( count % 2 === 0 ){
+          shuffled.push( item );
+        } else {
+          shuffled.unshift( item );
+        }
+      }
+    });
+
+    return shuffled.reverse();
   };
 
 
